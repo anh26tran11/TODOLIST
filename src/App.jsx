@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import TodoHeader from "./components/TodoHeader";
 import TodoItem from "./components/TodoItem";
 function App() {
-  const listItem = [
+  const [listItem, setListItem] = useState([
     {
       id: 1,
       name: "123",
@@ -15,7 +15,20 @@ function App() {
       name: "1234",
       isCompleted: true,
     },
-  ];
+  ]);
+  const handleDelete = (id) => {
+    setListItem(listItem.filter((item) => item.id !== id));
+  };
+  const handleStatus = (id) => {
+    setListItem(
+      listItem.map((item) =>
+        item.id === id ? { ...item, isCompleted: !item.isCompleted } : item
+      )
+    );
+  };
+  const totalTask = listItem.length;
+  const completedTask = listItem.filter((item) => item.isCompleted).length;
+  const inprogressTask = totalTask - completedTask;
   return (
     <div className="max-w-2xl mx-auto">
       <div className="bg-yellow-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-none p-8 mb-8">
@@ -25,7 +38,11 @@ function App() {
         <p class="text-lg font-bold text-black text-center mb-6">
           Your mission control dashboard
         </p>
-        <TodoHeader />
+        <TodoHeader
+          totalTask={totalTask}
+          completedTask={completedTask}
+          inprogressTask={inprogressTask}
+        />
         <button
           class="bg-green-300 w-full border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] rounded-none p-4 inline-block hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
           type="button"
@@ -57,7 +74,11 @@ function App() {
           value=""
         ></input>
       </div>
-      <TodoItem listItem={listItem} />
+      <TodoItem
+        listItem={listItem}
+        handleDelete={handleDelete}
+        handleStatus={handleStatus}
+      />
     </div>
   );
 }

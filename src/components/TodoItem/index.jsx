@@ -1,7 +1,11 @@
 import React from "react";
 import { Button } from "../ui/button";
 
-const TodoItem = ({ listItem }) => {
+const TodoItem = ({
+  listItem,
+  handleDelete = () => {},
+  handleStatus = () => {},
+}) => {
   return (
     <div className="space-y-4">
       {listItem.map((item) => (
@@ -12,7 +16,10 @@ const TodoItem = ({ listItem }) => {
           } relative border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] rounded-none p-4 transform hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200`}
         >
           <div className="flex items-center gap-4">
-            <div className="text-3xl cursor-pointer">
+            <div
+              onClick={() => handleStatus(item.id)}
+              className="text-3xl cursor-pointer"
+            >
               {item.isCompleted ? (
                 <svg
                   width="30"
@@ -66,7 +73,10 @@ const TodoItem = ({ listItem }) => {
               </svg>
             </button>
 
-            <button className="w-auto cursor-pointer ml-4 px-3 py-1 border-3 border-black shadow-[2px_2px_0px_#000] rounded-lg absolute right-4 top-1/2 transform -translate-y-1/2">
+            <button
+              onClick={() => handleDelete(item.id)}
+              className="w-auto cursor-pointer ml-4 px-3 py-1 border-3 border-black shadow-[2px_2px_0px_#000] rounded-lg absolute right-4 top-1/2 transform -translate-y-1/2"
+            >
               <svg
                 width="24px"
                 height="24px"
