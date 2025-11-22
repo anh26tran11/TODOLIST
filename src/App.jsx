@@ -4,6 +4,18 @@ import viteLogo from "/vite.svg";
 import TodoHeader from "./components/TodoHeader";
 import TodoItem from "./components/TodoItem";
 function App() {
+  const listItem = [
+    {
+      id: 1,
+      name: "123",
+      isCompleted: false,
+    },
+    {
+      id: 2,
+      name: "1234",
+      isCompleted: true,
+    },
+  ];
   return (
     <div className="max-w-2xl mx-auto">
       <div className="bg-yellow-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-none p-8 mb-8">
@@ -45,7 +57,7 @@ function App() {
           value=""
         ></input>
       </div>
-      <TodoItem />
+      <TodoItem listItem={listItem} />
     </div>
   );
 }
