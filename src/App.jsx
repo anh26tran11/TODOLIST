@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import TodoHeader from "./components/TodoHeader";
 import TodoItem from "./components/TodoItem";
+import TodoDialog from "./components/TodoDialog";
 function App() {
   const [listItem, setListItem] = useState([
     {
@@ -16,6 +17,7 @@ function App() {
       isCompleted: true,
     },
   ]);
+  const [showDialog, setShowDialog] = useState(false);
   const handleDelete = (id) => {
     setListItem(listItem.filter((item) => item.id !== id));
   };
@@ -52,7 +54,12 @@ function App() {
           data-state="closed"
           data-slot="dialog-trigger"
         >
-          <p class="text-xl font-black text-black">Add New Task</p>
+          <p
+            onClick={() => setShowDialog(true)}
+            class="text-xl font-black text-black"
+          >
+            Add New Task
+          </p>
         </button>
         <div class="flex gap-3 mt-6">
           <button class="px-4 w-full py-2 border-3 border-black hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 shadow-[3px_3px_0px_#000] bg-yellow-300">
@@ -79,6 +86,7 @@ function App() {
         handleDelete={handleDelete}
         handleStatus={handleStatus}
       />
+      <TodoDialog open={showDialog} onOpenChange={setShowDialog} />
     </div>
   );
 }
