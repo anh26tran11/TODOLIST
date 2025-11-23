@@ -22,12 +22,12 @@ const TodoHeader = ({ totalTask, completedTask, inprogressTask }) => {
             style={{ width: `${percent}%` }}
             className="bg-green-400 h-full border-r-3 border-black transition-all duration-500 flex items-center justify-center"
           >
-            <span class="text-black font-black text-sm">
+            <span className="text-black font-black text-sm">
               {inprogressTask === totalTask ? "" : `${percent.toFixed(0)}%`}
             </span>
           </div>
         </div>
-        <p class="text-lg font-bold text-black mt-4">
+        <p className="text-lg font-bold text-black mt-4">
           {inprogressTask === 0
             ? "Ready for launch!"
             : `${inprogressTask} missions remaining`}
