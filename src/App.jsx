@@ -17,6 +17,40 @@ function App() {
       isCompleted: true,
     },
   ]);
+  const [filter, setFilter] = useState("");
+  const handleFilter = (filter) => {
+    setFilter(filter);
+  };
+  const getFilteredItems = () => {
+    if (filter === "completed") {
+      return listItem.filter((item) => item.isCompleted === true);
+    } else if (filter === "active") {
+      return listItem.filter((item) => item.isCompleted === false);
+    }
+    return listItem;
+  };
+  const [valueInput, setValueInput] = useState("");
+  const handleSaveTask = () => {
+    if (idTask) {
+      setListItem(
+        listItem.map((item) =>
+          item.id === idTask ? { ...item, name: valueInput } : item
+        )
+      );
+    } else {
+      setListItem([
+        ...listItem,
+        {
+          id: listItem.length + 1,
+          name: valueInput,
+          isCompleted: false,
+        },
+      ]);
+    }
+    setShowDialog(false);
+    setIdTask("");
+    setValueInput("");
+  };
   const [idTask, setIdTask] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const handleDelete = (id) => {
@@ -61,13 +95,22 @@ function App() {
           </p>
         </button>
         <div className="flex gap-3 mt-6">
-          <button className="px-4 w-full py-2 border-3 border-black hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 shadow-[3px_3px_0px_#000] bg-yellow-300">
+          <button
+            onClick={() => handleFilter("all")}
+            className="px-4 w-full py-2 border-3 border-black hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 shadow-[3px_3px_0px_#000] bg-yellow-300"
+          >
             All
           </button>
-          <button className="px-4 w-full bg-green-300 py-2 border-3 border-black hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 shadow-[3px_3px_0px_#000]  bg-gray-200">
+          <button
+            onClick={() => handleFilter("active")}
+            className="px-4 w-full bg-orange-300 py-2 border-3 border-black hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 shadow-[3px_3px_0px_#000]  bg-gray-200"
+          >
             Active
           </button>
-          <button className="px-4 bg-orange-300 py-2 w-full border-3 border-black hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 shadow-[3px_3px_0px_#000] bg-gray-200">
+          <button
+            onClick={() => handleFilter("completed")}
+            className="px-4 bg-green-300 py-2 w-full border-3 border-black hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 shadow-[3px_3px_0px_#000] bg-gray-200"
+          >
             Completed
           </button>
         </div>
@@ -81,18 +124,26 @@ function App() {
         ></input>
       </div>
       <TodoItem
-        listItem={listItem}
+        listItem={getFilteredItems()}
         handleDelete={handleDelete}
         handleStatus={handleStatus}
         setShowDialog={setShowDialog}
         idTask={idTask}
         setIdTask={setIdTask}
+        valueInput={valueInput}
+        setValueInput={setValueInput}
+        handleFilter={handleFilter}
+        filter={filter}
+        setFilter={setFilter}
       />
       <TodoDialog
         open={showDialog}
         onOpenChange={setShowDialog}
         idTask={idTask}
         setIdTask={setIdTask}
+        handleSaveTask={handleSaveTask}
+        valueInput={valueInput}
+        setValueInput={setValueInput}
       />
     </div>
   );
