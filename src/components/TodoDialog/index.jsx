@@ -11,12 +11,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-export default function TodoDialog({ open, onOpenChange }) {
+export default function TodoDialog({ open, onOpenChange, idTask, setIdTask }) {
+  if (!open) {
+    setIdTask("");
+  }
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg p-6 sm:max-w-lg border-4 border-black shadow-[6px_6px_0px_#000] bg-pink-200 animate-in fade-in-0 zoom-in-95 duration-200">
         <DialogHeader className="flex flex-col gap-2 text-center sm:text-left">
-          <DialogTitle className="text-2xl font-bold">Add New Task</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">
+            {idTask ? "Edit Task" : "Add New Task"}
+          </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4">
           <div className="grid gap-3">
@@ -33,7 +38,7 @@ export default function TodoDialog({ open, onOpenChange }) {
             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm disabled:opacity-50 h-9 px-4 py-2 border-4 border-black shadow-[4px_4px_0px_#000] bg-green-300 text-black font-bold hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0px_#000] transition-all duration-200 disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_#000]"
             type="submit"
           >
-            Save changes
+            {idTask ? "Save" : "Save Task"}
           </Button>
         </DialogFooter>
       </DialogContent>

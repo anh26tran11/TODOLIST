@@ -17,6 +17,7 @@ function App() {
       isCompleted: true,
     },
   ]);
+  const [idTask, setIdTask] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const handleDelete = (id) => {
     setListItem(listItem.filter((item) => item.id !== id));
@@ -84,8 +85,15 @@ function App() {
         handleDelete={handleDelete}
         handleStatus={handleStatus}
         setShowDialog={setShowDialog}
+        idTask={idTask}
+        setIdTask={setIdTask}
       />
-      <TodoDialog open={showDialog} onOpenChange={setShowDialog} />
+      <TodoDialog
+        open={showDialog}
+        onOpenChange={setShowDialog}
+        idTask={idTask}
+        setIdTask={setIdTask}
+      />
     </div>
   );
 }
